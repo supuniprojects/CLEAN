@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 07/30/2021 05:00:57 PM
+// Create Date: 07/30/2021 05:45:45 PM
 // Design Name: 
-// Module Name: mux41_dataflow
+// Module Name: mux24_gate
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,13 +19,15 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-//dataflow model of the 4:1 multiplexer
-module mux41_dataflow(input A, 
-input B, 
-input C, 
-input D, 
-input s0, s1,
-output out );
 
-assign out = s1 ? (s0 ? D : C) : (s0 ? B : A); 
+module m41(out, a, b, c, d, s0, s1);
+
+output out;
+input a, b, c, d, s0, s1;
+wire sobar, s1bar, T1, T2, T3, T4;
+
+not (s0bar, s0), (s1bar, s1);
+and (T1, a, s0bar, s1bar), (T2, b, s0bar, s1),(T3, c, s0, s1bar), (T4, d, s0, s1);
+or(out, T1, T2, T3, T4);
+
 endmodule

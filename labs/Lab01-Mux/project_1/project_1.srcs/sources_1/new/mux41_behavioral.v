@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 07/30/2021 05:00:57 PM
+// Create Date: 07/30/2021 06:00:19 PM
 // Design Name: 
-// Module Name: mux41_dataflow
+// Module Name: mux41_behavioral
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,13 +19,23 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-//dataflow model of the 4:1 multiplexer
-module mux41_dataflow(input A, 
-input B, 
-input C, 
-input D, 
-input s0, s1,
-output out );
 
-assign out = s1 ? (s0 ? D : C) : (s0 ? B : A); 
+module mux41_behavioral(A, B, C, D, s0, s1, out);
+
+input wire A, B, C, D;
+input wire s0, s1;
+output reg out;
+
+always @ (A or B or C or D or s0, s1)
+begin
+
+case (s0 | s1)
+2'B00 : out <= A;
+2'B01 : out <= B;
+2'B10 : out <= C;
+2'B11 : out <= D;
+endcase
+
+end
+
 endmodule

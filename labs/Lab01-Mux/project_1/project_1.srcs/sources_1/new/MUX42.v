@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 07/30/2021 05:00:57 PM
+// Create Date: 07/30/2021 06:16:26 PM
 // Design Name: 
-// Module Name: mux41_dataflow
+// Module Name: MUX42
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,13 +19,15 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-//dataflow model of the 4:1 multiplexer
-module mux41_dataflow(input A, 
-input B, 
-input C, 
-input D, 
-input s0, s1,
-output out );
 
-assign out = s1 ? (s0 ? D : C) : (s0 ? B : A); 
+module m41(out, A, B, C, D, s0, s1);
+
+output out;
+input A, B, C, D, s0, s1;
+wire s0wire, s1wire, w1, w2, w3, w4;
+
+not (s0wire, s0), (s1wire, s1);
+and (w1, A, s0wire, s1wire), (w2, B, s0wire, s1),(w3, C, s0, s1wire), (w4, D, s0, s1);
+or(out, w1, w2, w3, w4);
+
 endmodule
